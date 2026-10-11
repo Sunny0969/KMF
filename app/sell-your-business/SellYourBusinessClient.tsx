@@ -494,7 +494,7 @@ export default function SellYourBusinessClient() {
                 Privacy Policy
               </Link>{" "}
               |{" "}
-              <Link href="https://kmfbusinessadvisor.com/terms-and-conditions/" className="underline hover:text-white">
+              <Link href="/terms-and-conditions" className="underline hover:text-white">
                 Terms and Conditions
               </Link>{" "}
               |{" "}

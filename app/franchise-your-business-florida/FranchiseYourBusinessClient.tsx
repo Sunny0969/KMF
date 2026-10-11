@@ -881,7 +881,7 @@ export default function FranchiseYourBusinessClient() {
             <p>
               Copyright © 2026 KMF Business Advisors. All rights reserved. |{" "}
               <a href="/privacy-policy" className="underline hover:text-white">Privacy Policy</a> |{" "}
-              <a href="https://kmfbusinessadvisor.com/terms-and-conditions/" className="underline hover:text-white">Terms and Conditions</a> |{" "}
+              <a href="/terms-and-conditions" className="underline hover:text-white">Terms and Conditions</a> |{" "}
               <a href="https://kmfbusinessadvisor.com/accessibility-statement/" className="underline hover:text-white">Accessibility</a> |{" "}
               <a href="https://kmfbusinessadvisor.com/disclaimers/" className="underline hover:text-white">Disclaimers</a>
             </p>

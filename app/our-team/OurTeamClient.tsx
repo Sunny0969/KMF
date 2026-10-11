@@ -545,7 +545,7 @@ export default function OurTeamClient() {
               <a href="/privacy-policy" className="underline hover:text-white">Privacy Policy</a> |{" "}
               <a href="/terms-and-conditions" className="underline hover:text-white">Terms and Conditions</a> |{" "}
               <a href="/accessibility-statement" className="underline hover:text-white">Accessibility</a> |{" "}
-              <a href="https://kmfbusinessadvisor.com/disclaimers/" className="underline hover:text-white">Disclaimers</a>
+              <a href="/disclaimers" className="underline hover:text-white">Disclaimers</a>
             </p>
           </div>
         </div>

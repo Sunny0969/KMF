@@ -502,7 +502,7 @@ export default function SellYourBusinessClient() {
                 Accessibility
               </Link>{" "}
               |{" "}
-              <Link href="https://kmfbusinessadvisor.com/disclaimers/" className="underline hover:text-white">
+              <Link href="/disclaimers" className="underline hover:text-white">
                 Disclaimers
               </Link>
             </p>

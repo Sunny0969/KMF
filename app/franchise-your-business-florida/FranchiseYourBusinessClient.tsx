@@ -846,7 +846,7 @@ export default function FranchiseYourBusinessClient() {
                   </Link>
                 </li>
                 <li>
-                  <a href="https://kmfbusinessadvisor.com/frequently-asked-questions/" className="hover:text-[#c59b27] transition-colors">
+                  <a href="/business-broker-faq" className="hover:text-[#c59b27] transition-colors">
                     Florida Business Brokerage FAQs
                   </a>
                 </li>

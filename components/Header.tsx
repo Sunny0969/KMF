@@ -62,7 +62,7 @@ export default function Header() {
           {/* Right: FAQs, Support & Get Started */}
           <div className="flex items-center space-x-4">
             <Link
-              href="/frequently-asked-questions"
+              href="/business-broker-faq"
               className="text-gray-300 hover:text-[#c59b27] transition-colors"
             >
               FAQs

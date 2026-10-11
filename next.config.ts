@@ -18,6 +18,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.trustindex.io" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/frequently-asked-questions",
+        destination: "/business-broker-faq",
+        permanent: true,
+      },
+      {
+        source: "/frequently-asked-questions/:path*",
+        destination: "/business-broker-faq",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

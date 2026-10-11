@@ -472,7 +472,7 @@ export default function ContactUsClient() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/frequently-asked-questions" className="hover:text-amber-400 transition-colors flex items-center gap-2">
+                  <Link href="/business-broker-faq" className="hover:text-amber-400 transition-colors flex items-center gap-2">
                     <span className="text-amber-500">⊙</span> Florida Business Brokerage FAQs
                   </Link>
                 </li>

@@ -985,7 +985,7 @@ export default function RealEstateClient() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/frequently-asked-questions" className="hover:text-amber-400 transition-colors">
+                  <Link href="/business-broker-faq" className="hover:text-amber-400 transition-colors">
                     FAQs
                   </Link>
                 </li>

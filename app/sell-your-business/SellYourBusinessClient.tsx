@@ -455,7 +455,7 @@ export default function SellYourBusinessClient() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://kmfbusinessadvisor.com/frequently-asked-questions/" className="hover:text-[#c59b27] transition-colors">
+                  <Link href="/business-broker-faq" className="hover:text-[#c59b27] transition-colors">
                     Florida Business Brokerage FAQs
                   </Link>
                 </li>

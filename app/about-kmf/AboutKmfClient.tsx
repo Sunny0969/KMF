@@ -562,7 +562,7 @@ export default function AboutKmfClient() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/frequently-asked-questions" className="hover:text-white transition-colors">
+                  <Link href="/business-broker-faq" className="hover:text-white transition-colors">
                     Florida Business Brokerage FAQs
                   </Link>
                 </li>

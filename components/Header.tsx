@@ -24,6 +24,11 @@ export default function Header() {
     pathname === '/franchise-your-business-florida';
   const isRealEstateActive = pathname === '/real-estate';
   const isAboutActive = pathname === '/about-kmf' || pathname === '/our-team' || pathname === '/about-us';
+  const isResourcesActive =
+    pathname === '/case-studies' ||
+    pathname === '/florida-business-seller-resources' ||
+    pathname === '/florida-business-buyer-resources' ||
+    pathname === '/business-broker-faq';
   const isContactActive = pathname === '/contact-us';
   const isHomeActive = pathname === '/';
 
@@ -82,26 +87,26 @@ export default function Header() {
 
       {/* 2. MAIN STATIC HEADER */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm transition-all duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-[1400px] mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="flex items-center justify-between h-20 gap-2 xl:gap-4">
             {/* Logo */}
             <Link href="/" className="shrink-0 flex items-center">
               <Image
                 src="https://kmfbusinessadvisor.com/wp-content/uploads/2024/04/cropped-KMF-LOGO-e1681225150914.png"
                 alt="KMF Business Advisors official logo - Florida business brokerage services"
-                width={210}
-                height={75}
+                width={180}
+                height={64}
                 priority
-                className="h-12 sm:h-14 w-auto object-contain"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-7 text-[15px] font-semibold text-gray-800">
+            {/* Desktop Navigation - Clean single-row, compact padding & text */}
+            <nav className="hidden lg:flex items-center space-x-3.5 xl:space-x-5 text-[13px] xl:text-[14px] font-semibold text-gray-800 shrink-0">
               {/* Home / Business Broker Florida */}
               <Link
                 href="/"
-                className={`transition-colors ${
+                className={`whitespace-nowrap transition-colors ${
                   isHomeActive
                     ? 'text-[#c59b27] font-bold'
                     : 'text-gray-800 hover:text-[#c59b27]'
@@ -118,28 +123,28 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className={`flex items-center gap-1 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isBuyActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
                 >
                   Buy a Business
-                  <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 {openDropdown === 'buy' && (
-                  <div className="absolute left-0 top-full w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                  <div className="absolute left-0 top-full w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
                     <a
                       href="https://kmfbusinessadvisor.com/wp-content/uploads/2026/09/KMF_Buyer_Broker_Representation_Agreement.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Buyer Broker Representation
                     </a>
                     <Link
                       href="/businesses-for-sale"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Businesses for Sale in Florida
                     </Link>
@@ -147,7 +152,7 @@ export default function Header() {
                       href="https://bizmls.com/cgi-bin/a-enterbuyer.asp?folder=bbf-1267003"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Buyer Registration
                     </a>
@@ -163,26 +168,26 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className={`flex items-center gap-1 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isSellActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
                 >
                   Sell a Business
-                  <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 {openDropdown === 'sell' && (
-                  <div className="absolute left-0 top-full w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                  <div className="absolute left-0 top-full w-56 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
                     <Link
                       href="/sell-your-business"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Sell Your Business
                     </Link>
                     <Link
                       href="/profitable-business-for-sale"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Profitable Business for Sale
                     </Link>
@@ -198,26 +203,26 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className={`flex items-center gap-1 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isFranchiseActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
                 >
                   Franchise Services
-                  <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 {openDropdown === 'franchise' && (
-                  <div className="absolute left-0 top-full w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                  <div className="absolute left-0 top-full w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
                     <Link
                       href="/franchise-services"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Franchise Services Overview
                     </Link>
                     <Link
                       href="/sell-a-franchise"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Sell a Franchise in Florida
                     </Link>
@@ -225,13 +230,13 @@ export default function Header() {
                       href="https://bizmls.com/listings/bbf-1267003/bus-all.asp"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Buy a Franchise ↗
                     </a>
                     <Link
                       href="/franchise-your-business-florida"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Franchise Your Business Florida
                     </Link>
@@ -239,7 +244,7 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Real Estate Dropdown (ALWAYS VISIBLE ON ALL PAGES) */}
+              {/* Real Estate Dropdown */}
               <div
                 className="relative py-2"
                 onMouseEnter={() => setOpenDropdown('realestate')}
@@ -247,20 +252,20 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className={`flex items-center gap-1 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isRealEstateActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
                 >
                   Real Estate
-                  <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 {openDropdown === 'realestate' && (
-                  <div className="absolute left-0 top-full w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                  <div className="absolute left-0 top-full w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
                     <Link
                       href="/real-estate"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27] font-semibold"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27] font-semibold"
                     >
                       Commercial Real Estate Florida
                     </Link>
@@ -268,7 +273,7 @@ export default function Header() {
                       href="https://kmfsellsflorida.com/property-search"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Florida Property Search ↗
                     </a>
@@ -276,7 +281,7 @@ export default function Header() {
                       href="https://beachesmls.buildersupdate.com/search/searchbu.aspx"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       New Construction Homes ↗
                     </a>
@@ -284,7 +289,7 @@ export default function Header() {
                       href="https://beachesmls.buildersupdate.com/search/SearchCustomBuilder.aspx"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Custom Home builder ↗
                     </a>
@@ -300,26 +305,26 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className={`flex items-center gap-1 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isAboutActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
                 >
                   About
-                  <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 {openDropdown === 'about' && (
-                  <div className="absolute left-0 top-full w-56 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                  <div className="absolute left-0 top-full w-52 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
                     <Link
                       href="/about-kmf"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       KMF Business Advisors
                     </Link>
                     <Link
                       href="/our-team"
-                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Our Team
                     </Link>
@@ -327,10 +332,57 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Contact Us link */}
+              {/* Resources Dropdown */}
+              <div
+                className="relative py-2"
+                onMouseEnter={() => setOpenDropdown('resources')}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <button
+                  type="button"
+                  className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
+                    isResourcesActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
+                  }`}
+                >
+                  Resources
+                  <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 20 20">
+                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                  </svg>
+                </button>
+                {openDropdown === 'resources' && (
+                  <div className="absolute left-0 top-full w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                    <a
+                      href="https://kmfbusinessadvisor.com/case-studies/"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Case Studies
+                    </a>
+                    <a
+                      href="https://kmfbusinessadvisor.com/florida-business-seller-resources/"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Florida Business Seller Resources
+                    </a>
+                    <a
+                      href="https://kmfbusinessadvisor.com/florida-business-buyer-resources/"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Florida Business Buyer Resources
+                    </a>
+                    <Link
+                      href="/frequently-asked-questions"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Business Broker FAQ
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Contact Us nav link */}
               <Link
                 href="/contact-us"
-                className={`transition-colors ${
+                className={`whitespace-nowrap transition-colors ${
                   isContactActive
                     ? 'text-[#c59b27] font-bold'
                     : 'text-gray-800 hover:text-[#c59b27]'
@@ -341,12 +393,12 @@ export default function Header() {
             </nav>
 
             {/* Desktop Gold CTA Button */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden lg:flex items-center shrink-0">
               <Link
                 href="/contact-us"
-                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-[#c59b27] hover:bg-[#b0881f] text-white font-semibold text-sm shadow-sm transition-all hover:shadow-md"
+                className="inline-flex items-center justify-center px-4 xl:px-5 py-2 rounded-lg bg-[#c59b27] hover:bg-[#b0881f] text-white font-semibold text-xs xl:text-sm shadow-sm transition-all hover:shadow-md whitespace-nowrap"
               >
-                Contact Us
+                Get in Touch
               </Link>
             </div>
 
@@ -373,14 +425,14 @@ export default function Header() {
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={`block py-2 text-base font-medium ${
-                isHomeActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
+              className={`block py-2 text-base font-semibold ${
+                isHomeActive ? 'text-[#c59b27]' : 'text-gray-800 hover:text-[#c59b27]'
               }`}
             >
               Business Broker Florida
             </Link>
 
-            {/* Mobile Buy a Business */}
+            {/* Mobile Buy */}
             <div className="py-2 border-t border-gray-100">
               <button
                 onClick={() => toggleDropdown('mbuy')}
@@ -397,7 +449,7 @@ export default function Header() {
                     rel="noopener noreferrer"
                     className="block py-1 hover:text-[#c59b27]"
                   >
-                    Buyer Broker Representation ↗
+                    Buyer Broker Representation
                   </a>
                   <Link
                     href="/businesses-for-sale"
@@ -412,13 +464,13 @@ export default function Header() {
                     rel="noopener noreferrer"
                     className="block py-1 hover:text-[#c59b27]"
                   >
-                    Buyer Registration ↗
+                    Buyer Registration
                   </a>
                 </div>
               )}
             </div>
 
-            {/* Mobile Sell a Business */}
+            {/* Mobile Sell */}
             <div className="py-2 border-t border-gray-100">
               <button
                 onClick={() => toggleDropdown('msell')}
@@ -447,7 +499,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Mobile Franchise Services */}
+            {/* Mobile Franchise */}
             <div className="py-2 border-t border-gray-100">
               <button
                 onClick={() => toggleDropdown('mfranchise')}
@@ -491,7 +543,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Mobile Real Estate (ALWAYS VISIBLE) */}
+            {/* Mobile Real Estate */}
             <div className="py-2 border-t border-gray-100">
               <button
                 onClick={() => toggleDropdown('mre')}
@@ -566,6 +618,46 @@ export default function Header() {
               )}
             </div>
 
+            {/* Mobile Resources */}
+            <div className="py-2 border-t border-gray-100">
+              <button
+                onClick={() => toggleDropdown('mresources')}
+                className="w-full flex justify-between items-center text-base font-medium text-gray-800"
+              >
+                Resources
+                <span>{openDropdown === 'mresources' ? '−' : '+'}</span>
+              </button>
+              {openDropdown === 'mresources' && (
+                <div className="pl-4 mt-2 space-y-2 text-sm text-gray-600">
+                  <a
+                    href="https://kmfbusinessadvisor.com/case-studies/"
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Case Studies
+                  </a>
+                  <a
+                    href="https://kmfbusinessadvisor.com/florida-business-seller-resources/"
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Florida Business Seller Resources
+                  </a>
+                  <a
+                    href="https://kmfbusinessadvisor.com/florida-business-buyer-resources/"
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Florida Business Buyer Resources
+                  </a>
+                  <Link
+                    href="/frequently-asked-questions"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Business Broker FAQ
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {/* Mobile Contact */}
             <Link
               href="/contact-us"
@@ -579,7 +671,7 @@ export default function Header() {
               <Link
                 href="/contact-us"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block w-full py-3 text-center font-semibold rounded-lg bg-[#c59b27] text-white hover:bg-[#b0881f] shadow-sm"
+                className="block text-center w-full py-3 rounded-lg bg-[#c59b27] hover:bg-[#b0881f] text-white font-semibold text-sm shadow-sm"
               >
                 Contact Us
               </Link>

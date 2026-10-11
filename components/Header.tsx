@@ -392,14 +392,16 @@ export default function Header() {
               </Link>
             </nav>
 
-            {/* Desktop Gold CTA Button */}
+            {/* Desktop Gold CTA Button - WhatsApp */}
             <div className="hidden lg:flex items-center shrink-0">
-              <Link
-                href="/contact-us"
+              <a
+                href="https://wa.me/19548649161"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-4 xl:px-5 py-2 rounded-lg bg-[#c59b27] hover:bg-[#b0881f] text-white font-semibold text-xs xl:text-sm shadow-sm transition-all hover:shadow-md whitespace-nowrap"
               >
                 Get in Touch
-              </Link>
+              </a>
             </div>
 
             {/* Mobile menu button */}
@@ -671,13 +673,15 @@ export default function Header() {
             </Link>
 
             <div className="pt-4">
-              <Link
-                href="/contact-us"
+              <a
+                href="https://wa.me/19548649161"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-center w-full py-3 rounded-lg bg-[#c59b27] hover:bg-[#b0881f] text-white font-semibold text-sm shadow-sm"
               >
-                Contact Us
-              </Link>
+                Get in Touch (WhatsApp)
+              </a>
             </div>
           </div>
         )}

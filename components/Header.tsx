@@ -363,12 +363,12 @@ export default function Header() {
                     >
                       Florida Business Seller Resources
                     </Link>
-                    <a
-                      href="https://kmfbusinessadvisor.com/florida-business-buyer-resources/"
+                    <Link
+                      href="/florida-business-buyer-resources"
                       className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Florida Business Buyer Resources
-                    </a>
+                    </Link>
                     <Link
                       href="/frequently-asked-questions"
                       className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
@@ -643,12 +643,13 @@ export default function Header() {
                   >
                     Florida Business Seller Resources
                   </Link>
-                  <a
-                    href="https://kmfbusinessadvisor.com/florida-business-buyer-resources/"
+                  <Link
+                    href="/florida-business-buyer-resources"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="block py-1 hover:text-[#c59b27]"
                   >
                     Florida Business Buyer Resources
-                  </a>
+                  </Link>
                   <Link
                     href="/frequently-asked-questions"
                     onClick={() => setMobileMenuOpen(false)}

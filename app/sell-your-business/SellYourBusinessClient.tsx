@@ -490,7 +490,7 @@ export default function SellYourBusinessClient() {
           <div className="pt-8 text-center text-xs text-gray-500 space-y-2">
             <p>
               Copyright © 2026 KMF Business Advisors. All rights reserved. |{" "}
-              <Link href="https://kmfbusinessadvisor.com/privacy-policy/" className="underline hover:text-white">
+              <Link href="/privacy-policy" className="underline hover:text-white">
                 Privacy Policy
               </Link>{" "}
               |{" "}

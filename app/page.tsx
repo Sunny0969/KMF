@@ -1583,7 +1583,7 @@ export default function HomePage() {
                 Terms and Conditions
               </Link>{" "}
               |{" "}
-              <Link href="https://kmfbusinessadvisor.com/accessibility-statement/" className="underline hover:text-white">
+              <Link href="/accessibility-statement" className="underline hover:text-white">
                 Accessibility
               </Link>{" "}
               |{" "}

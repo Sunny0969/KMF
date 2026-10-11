@@ -351,12 +351,12 @@ export default function Header() {
                 </button>
                 {openDropdown === 'resources' && (
                   <div className="absolute left-0 top-full w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
-                    <a
-                      href="https://kmfbusinessadvisor.com/case-studies/"
+                    <Link
+                      href="/case-studies"
                       className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
                     >
                       Case Studies
-                    </a>
+                    </Link>
                     <a
                       href="https://kmfbusinessadvisor.com/florida-business-seller-resources/"
                       className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
@@ -629,12 +629,13 @@ export default function Header() {
               </button>
               {openDropdown === 'mresources' && (
                 <div className="pl-4 mt-2 space-y-2 text-sm text-gray-600">
-                  <a
-                    href="https://kmfbusinessadvisor.com/case-studies/"
+                  <Link
+                    href="/case-studies"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="block py-1 hover:text-[#c59b27]"
                   >
                     Case Studies
-                  </a>
+                  </Link>
                   <a
                     href="https://kmfbusinessadvisor.com/florida-business-seller-resources/"
                     className="block py-1 hover:text-[#c59b27]"

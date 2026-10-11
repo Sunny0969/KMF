@@ -29,39 +29,6 @@ export default function FloridaSellerResourcesClient() {
     },
   ];
 
-  const blogPosts = [
-    {
-      id: 'post-9208',
-      image: 'https://kmfbusinessadvisor.com/wp-content/uploads/2026/10/high-level-description-a-casual-iphone-s_aGT5FHK6XCSVPShc6imMtg_WZ1AEjq6SEmjH_sLTuD4NQ_cover-300x169.jpg',
-      category: 'Resources',
-      title: 'Buyer and Procurement: How to Approach a Business Acquisition',
-      date: 'October 5, 2026',
-      author: 'admin',
-      excerpt: 'Purchasing an existing business can be an attractive path for entrepreneurs who want to step into ownership without building from scratch.',
-      link: '/contact-us',
-    },
-    {
-      id: 'post-8975',
-      image: 'https://kmfbusinessadvisor.com/wp-content/uploads/2026/10/high-level-description-a-casual-iphone-s_A0nXVJXxVYyvOdsneb-uDA_hidKYOkfRR6GBk3XkG8erQ-1-300x169.jpg',
-      category: 'Resources',
-      title: 'Business for Sale: A Guide to Buying the Right Business in Florida',
-      date: 'October 1, 2026',
-      author: 'admin',
-      excerpt: 'Buying an established business can be an exciting opportunity for entrepreneurs who want to become business owners without the initial startup friction.',
-      link: '/businesses-for-sale',
-    },
-    {
-      id: 'post-8966',
-      image: 'https://kmfbusinessadvisor.com/wp-content/uploads/2026/09/high-level-description-a-clean-editorial_s8qSW_TbVmqts3eZtoLWQQ_8NC7q4beQfyxQbl0UJdCFw-300x169.jpg',
-      category: 'Business Valuation',
-      title: 'Business Broker Fees Explained: Costs, Services, and More',
-      date: 'September 29, 2026',
-      author: 'admin',
-      excerpt: 'Selling a business is one of the biggest financial decisions an owner can make. From determining the right asking price to deal commissions.',
-      link: '/sell-your-business',
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
       {/* 1. SELLER RESOURCES TOOLKIT SECTION */}
@@ -186,91 +153,7 @@ export default function FloridaSellerResourcesClient() {
         </div>
       </section>
 
-      {/* 3. ARTICLES & INSIGHTS GRID */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-widest text-amber-600">
-              Expert Advisory Articles
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Florida Business Selling Insights
-            </h2>
-            <p className="text-slate-600 text-base">
-              Articles and strategic guides written by licensed Florida business brokers to help you navigate mergers, acquisitions, and exits.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="relative h-48 overflow-hidden bg-slate-100">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-slate-950 uppercase tracking-wider shadow">
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6 sm:p-7 space-y-3">
-                    <div className="flex items-center gap-2 text-xs text-slate-400">
-                      <span>{post.date}</span>
-                      <span>•</span>
-                      <span>By {post.author}</span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug group-hover:text-amber-600 transition-colors">
-                      <Link href={post.link}>{post.title}</Link>
-                    </h3>
-
-                    <p className="text-slate-600 text-sm leading-relaxed line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-6 sm:p-7 pt-0 border-t border-slate-100 mt-4">
-                  <Link
-                    href={post.link}
-                    className="inline-flex items-center text-sm font-bold text-amber-600 hover:text-amber-700 transition-colors gap-1.5"
-                  >
-                    <span>Read Article</span>
-                    <span>&rarr;</span>
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {/* Pagination UI matching WP element */}
-          <div className="flex justify-center items-center gap-2 mt-12 text-sm font-semibold text-slate-700">
-            <span className="w-9 h-9 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold shadow-sm">
-              1
-            </span>
-            <span className="w-9 h-9 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center cursor-pointer transition-colors">
-              2
-            </span>
-            <span className="px-1 text-slate-400">…</span>
-            <span className="w-9 h-9 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center cursor-pointer transition-colors">
-              14
-            </span>
-            <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 cursor-pointer transition-colors">
-              Next &rarr;
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. FREQUENTLY ASKED QUESTIONS */}
+      {/* 3. FREQUENTLY ASKED QUESTIONS */}
       <section className="py-20 bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">

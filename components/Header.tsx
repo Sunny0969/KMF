@@ -86,7 +86,7 @@ export default function Header() {
       </div>
 
       {/* 2. MAIN STATIC HEADER */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm transition-all duration-200">
+      <header suppressHydrationWarning className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-20 gap-2 xl:gap-4">
             {/* Logo */}
@@ -121,8 +121,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('buy')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isBuyActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -166,8 +165,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('sell')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isSellActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -201,8 +199,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('franchise')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isFranchiseActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -250,8 +247,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('realestate')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isRealEstateActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -303,8 +299,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('about')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isAboutActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -338,8 +333,7 @@ export default function Header() {
                 onMouseEnter={() => setOpenDropdown('resources')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button
-                  type="button"
+                <button suppressHydrationWarning type="button"
                   className={`flex items-center gap-1 whitespace-nowrap transition-colors cursor-pointer ${
                     isResourcesActive ? 'text-[#c59b27] font-bold' : 'text-gray-800 hover:text-[#c59b27]'
                   }`}
@@ -405,8 +399,7 @@ export default function Header() {
             </div>
 
             {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            <button suppressHydrationWarning onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2 rounded-lg text-gray-700 hover:text-[#c59b27] hover:bg-gray-100 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
@@ -436,8 +429,7 @@ export default function Header() {
 
             {/* Mobile Buy */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('mbuy')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('mbuy')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 Buy a Business
@@ -474,8 +466,7 @@ export default function Header() {
 
             {/* Mobile Sell */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('msell')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('msell')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 Sell a Business
@@ -503,8 +494,7 @@ export default function Header() {
 
             {/* Mobile Franchise */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('mfranchise')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('mfranchise')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 Franchise Services
@@ -547,8 +537,7 @@ export default function Header() {
 
             {/* Mobile Real Estate */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('mre')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('mre')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 Real Estate
@@ -593,8 +582,7 @@ export default function Header() {
 
             {/* Mobile About */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('mabout')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('mabout')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 About
@@ -622,8 +610,7 @@ export default function Header() {
 
             {/* Mobile Resources */}
             <div className="py-2 border-t border-gray-100">
-              <button
-                onClick={() => toggleDropdown('mresources')}
+              <button suppressHydrationWarning onClick={() => toggleDropdown('mresources')}
                 className="w-full flex justify-between items-center text-base font-medium text-gray-800"
               >
                 Resources

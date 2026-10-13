@@ -3,9 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { submitInquiry } from '@/app/actions/inquiries';
 
 export default function ProfitableBusinessClient() {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     businessName: '',
@@ -34,9 +37,41 @@ export default function ProfitableBusinessClient() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setFormError('');
+    setIsSubmitting(true);
+    try {
+      const result = await submitInquiry({
+        source: 'profitable-business',
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        details: {
+          businessName: formData.businessName,
+          industry: formData.industry,
+          timeframe: formData.timeframe,
+          realEstateIncluded: formData.realEstateIncluded,
+          location: formData.location,
+          yearsOperating: formData.yearsOperating,
+          annualRevenue: formData.annualRevenue,
+          profitSDE: formData.profitSDE,
+          ownerCompensation: formData.ownerCompensation,
+          expectedPrice: formData.expectedPrice,
+          employees: formData.employees,
+          ownerHours: formData.ownerHours,
+        },
+      });
+      if (!result.ok) {
+        setFormError(result.error);
+        return;
+      }
+      setFormSubmitted(true);
+    } catch {
+      setFormError('We could not save your inquiry. Please try again in a moment.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const toggleFaq = (index: number) => {
@@ -545,11 +580,15 @@ export default function ProfitableBusinessClient() {
                 </div>
 
                 <div className="pt-2">
+                  {formError ? (
+                    <p className="text-sm text-red-600 text-center mb-3">{formError}</p>
+                  ) : null}
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-[#c59b27] hover:bg-[#b0881f] text-white font-bold text-base shadow-md transition-all hover:shadow-lg"
+                    disabled={isSubmitting}
+                    className="w-full py-4 rounded-xl bg-[#c59b27] hover:bg-[#b0881f] text-white font-bold text-base shadow-md transition-all hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Request My Confidential Business Valuation
+                    {isSubmitting ? 'Submitting...' : 'Request My Confidential Business Valuation'}
                   </button>
                   <p className="text-center text-xs text-gray-400 mt-2">
                     🔒 Strictly confidential. No information shared with third parties or employees.

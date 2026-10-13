@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { submitInquiry } from '@/app/actions/inquiries';
 
 export default function FloridaBuyerResourcesClient() {
   const [openFaq, setOpenFaq] = useState<number | null>(0); // First FAQ open by default
@@ -21,6 +22,8 @@ export default function FloridaBuyerResourcesClient() {
     honeypot: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -38,10 +41,39 @@ export default function FloridaBuyerResourcesClient() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.honeypot) return;
-    setIsSubmitted(true);
+    setFormError('');
+    setIsSubmitting(true);
+    try {
+      const result = await submitInquiry({
+        source: 'buyer-resources',
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        details: {
+          refNumber: formData.refNumber,
+          locations: formData.locations,
+          preferredIndustry: formData.preferredIndustry,
+          investmentBudget: formData.investmentBudget,
+          liquidCapital: formData.liquidCapital,
+          purchaseStructure: formData.purchaseStructure,
+          timeframe: formData.timeframe,
+          visaInterest: formData.visaInterest,
+          opportunityAlerts: formData.opportunityAlerts,
+        },
+      });
+      if (!result.ok) {
+        setFormError(result.error);
+        return;
+      }
+      setIsSubmitted(true);
+    } catch {
+      setFormError('We could not save your inquiry. Please try again in a moment.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqs = [
@@ -422,11 +454,15 @@ export default function FloridaBuyerResourcesClient() {
                 />
 
                 {/* Submit Button */}
+                {formError ? (
+                  <p className="text-sm text-red-600">{formError}</p>
+                ) : null}
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base shadow-xl transition-all duration-200 hover:scale-[1.01] flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base shadow-xl transition-all duration-200 hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>Register as a Buyer</span>
+                  <span>{isSubmitting ? 'Submitting...' : 'Register as a Buyer'}</span>
                   <span>&rarr;</span>
                 </button>
               </form>

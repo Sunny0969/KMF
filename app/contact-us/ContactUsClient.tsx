@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { submitInquiry } from '@/app/actions/inquiries';
 
 export default function ContactUsClient() {
   const [openFaq, setOpenFaq] = useState<number | null>(0); // First item open by default matching WP active
@@ -14,6 +15,8 @@ export default function ContactUsClient() {
     honeypot: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -26,10 +29,32 @@ export default function ContactUsClient() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.honeypot) return; // bot detection
-    setIsSubmitted(true);
+    if (formData.honeypot) return;
+    setFormError('');
+    setIsSubmitting(true);
+    try {
+      const result = await submitInquiry({
+        source: 'contact-us',
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        details: {
+          serviceInterest: formData.serviceInterest,
+          message: formData.message,
+        },
+      });
+      if (!result.ok) {
+        setFormError(result.error);
+        return;
+      }
+      setIsSubmitted(true);
+    } catch {
+      setFormError('We could not save your inquiry. Please try again in a moment.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqs = [
@@ -278,11 +303,15 @@ export default function ContactUsClient() {
                     />
 
                     {/* Submit Button */}
+                    {formError ? (
+                      <p className="text-sm text-red-600">{formError}</p>
+                    ) : null}
                     <button
                       type="submit"
-                      className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base shadow-lg transition-all duration-200 hover:scale-[1.01] flex items-center justify-center gap-2"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base shadow-lg transition-all duration-200 hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <span>Submit Confidential Inquiry</span>
+                      <span>{isSubmitting ? 'Submitting...' : 'Submit Confidential Inquiry'}</span>
                       <span>&rarr;</span>
                     </button>
 

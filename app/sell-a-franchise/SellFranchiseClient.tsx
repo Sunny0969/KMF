@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { submitInquiry } from "@/app/actions/inquiries";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -87,6 +88,8 @@ export default function SellFranchiseClient() {
 
   // Form State
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -110,9 +113,39 @@ export default function SellFranchiseClient() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setFormError("");
+    setIsSubmitting(true);
+    try {
+      const result = await submitInquiry({
+        source: "sell-a-franchise",
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        details: {
+          conceptName: formData.conceptName,
+          numUnits: formData.numUnits,
+          unitLocations: formData.unitLocations,
+          yearsOperating: formData.yearsOperating,
+          sdeEbitda: formData.sdeEbitda,
+          leaseExpiration: formData.leaseExpiration,
+          grossRevenue: formData.grossRevenue,
+          remainingTerm: formData.remainingTerm,
+          resaleTimeframe: formData.resaleTimeframe,
+          franchisorNotified: formData.franchisorNotified,
+        },
+      });
+      if (!result.ok) {
+        setFormError(result.error);
+        return;
+      }
+      setFormSubmitted(true);
+    } catch {
+      setFormError("We could not save your inquiry. Please try again in a moment.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const toggleFaq = (index: number) => {
@@ -551,11 +584,17 @@ export default function SellFranchiseClient() {
                 </div>
 
                 <div className="pt-4">
+                  {formError ? (
+                    <p className="text-sm text-red-600 text-center mb-3">{formError}</p>
+                  ) : null}
                   <button
                     type="submit"
-                    className="w-full bg-[#c59b27] hover:bg-[#b0881f] text-white font-bold py-4 rounded-lg shadow-md hover:shadow-lg transition-all text-base flex items-center justify-center gap-2 cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#c59b27] hover:bg-[#b0881f] text-white font-bold py-4 rounded-lg shadow-md hover:shadow-lg transition-all text-base flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Request a Confidential Franchise-Resale Consultation
+                    {isSubmitting
+                      ? "Submitting..."
+                      : "Request a Confidential Franchise-Resale Consultation"}
                     <IconArrowRight className="w-5 h-5" />
                   </button>
                   <p className="text-center text-xs text-gray-500 mt-3">

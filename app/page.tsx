@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+import { submitInquiry } from "@/app/actions/inquiries";
 
 export default function HomePage() {
   // Navigation mobile state & dropdown state
@@ -12,6 +13,8 @@ export default function HomePage() {
 
   // Form submission state
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -96,9 +99,31 @@ export default function HomePage() {
     },
   ];
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setFormError("");
+    setIsSubmitting(true);
+    try {
+      const result = await submitInquiry({
+        source: "home",
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        details: {
+          service: formData.service,
+          message: formData.message,
+        },
+      });
+      if (!result.ok) {
+        setFormError(result.error);
+        return;
+      }
+      setFormSubmitted(true);
+    } catch {
+      setFormError("We could not save your inquiry. Please try again in a moment.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const toggleDropdown = (key: string) => {
@@ -435,11 +460,15 @@ export default function HomePage() {
                       className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#c59b27] focus:outline-hidden bg-white text-sm"
                     />
                   </div>
+                  {formError ? (
+                    <p className="text-sm text-red-600">{formError}</p>
+                  ) : null}
                   <button
                     type="submit"
-                    className="w-full bg-[#c59b27] hover:bg-[#a8821f] text-white font-bold py-3 px-6 rounded-lg transition-colors text-sm shadow cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#c59b27] hover:bg-[#a8821f] text-white font-bold py-3 px-6 rounded-lg transition-colors text-sm shadow cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Submit
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </button>
                 </form>
               )}

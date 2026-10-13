@@ -28,9 +28,12 @@ export default function Header() {
     pathname === '/case-studies' ||
     pathname === '/florida-business-seller-resources' ||
     pathname === '/florida-business-buyer-resources' ||
-    pathname === '/business-broker-faq';
+    pathname === '/business-broker-faq' ||
+    pathname.startsWith('/blog');
   const isContactActive = pathname === '/contact-us';
   const isHomeActive = pathname === '/';
+
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <>
@@ -369,6 +372,18 @@ export default function Header() {
                     >
                       Business Broker FAQ
                     </Link>
+                    <Link
+                      href="/blog?category=seller"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Seller Articles
+                    </Link>
+                    <Link
+                      href="/blog?category=buyer"
+                      className="block px-4 py-2 text-xs xl:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c59b27]"
+                    >
+                      Buyer Articles
+                    </Link>
                   </div>
                 )}
               </div>
@@ -645,6 +660,20 @@ export default function Header() {
                     className="block py-1 hover:text-[#c59b27]"
                   >
                     Business Broker FAQ
+                  </Link>
+                  <Link
+                    href="/blog?category=seller"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Seller Articles
+                  </Link>
+                  <Link
+                    href="/blog?category=buyer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block py-1 hover:text-[#c59b27]"
+                  >
+                    Buyer Articles
                   </Link>
                 </div>
               )}

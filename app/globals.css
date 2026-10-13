@@ -9,3 +9,128 @@ body {
   background-color: var(--background);
   color: var(--foreground);
 }
+
+.field {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5e1;
+  background: white;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.875rem;
+  color: #0f172a;
+}
+
+.field:focus {
+  outline: 2px solid #c59b27;
+  border-color: transparent;
+}
+
+.blog-editor .blog-editor-surface {
+  min-height: 420px;
+  padding: 1.25rem 1.4rem 2rem;
+  outline: none;
+}
+
+.blog-editor .blog-editor-surface p.is-editor-empty:first-child::before {
+  color: #94a3b8;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.blog-content,
+.blog-editor .blog-editor-surface {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #1e293b;
+}
+
+.blog-content h2,
+.blog-editor .blog-editor-surface h2 {
+  margin: 1.6rem 0 0.6rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #0b1c2d;
+  line-height: 1.25;
+}
+
+.blog-content h3,
+.blog-editor .blog-editor-surface h3 {
+  margin: 1.3rem 0 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0b1c2d;
+}
+
+.blog-content p,
+.blog-editor .blog-editor-surface p,
+.blog-content ul,
+.blog-editor .blog-editor-surface ul,
+.blog-content ol,
+.blog-editor .blog-editor-surface ol,
+.blog-content blockquote,
+.blog-editor .blog-editor-surface blockquote {
+  margin: 0.8rem 0;
+}
+
+.blog-content ul,
+.blog-editor .blog-editor-surface ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+}
+
+.blog-content ol,
+.blog-editor .blog-editor-surface ol {
+  list-style: decimal;
+  padding-left: 1.4rem;
+}
+
+.blog-content a,
+.blog-editor .blog-editor-surface a {
+  color: #8a6d12;
+  text-decoration: underline;
+}
+
+.blog-content blockquote,
+.blog-editor .blog-editor-surface blockquote {
+  border-left: 3px solid #c59b27;
+  padding-left: 1rem;
+  color: #475569;
+}
+
+.blog-content img,
+.blog-editor .blog-editor-surface img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+}
+
+.blog-content table,
+.blog-editor .blog-editor-surface table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.95rem;
+}
+
+.blog-content th,
+.blog-content td,
+.blog-editor .blog-editor-surface th,
+.blog-editor .blog-editor-surface td {
+  border: 1px solid #cbd5e1;
+  padding: 0.55rem 0.7rem;
+  vertical-align: top;
+}
+
+.blog-content th,
+.blog-editor .blog-editor-surface th {
+  background: #0b1c2d;
+  color: white;
+  text-align: left;
+}
+
+.blog-editor .selectedCell {
+  background: #fff7e6;
+}

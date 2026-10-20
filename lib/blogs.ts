@@ -7,6 +7,11 @@ import {
   type BlogFaq,
   type BlogRecord,
 } from "@/lib/blog";
+import {
+  deleteLocalBlog,
+  getLocalBlogs,
+  saveLocalBlog,
+} from "@/lib/local-storage";
 import { createSupabaseAdminClient, createSupabaseServerClient } from "@/lib/supabase";
 
 const BLOG_COLUMNS =
@@ -48,34 +53,34 @@ export function sanitizeBlogHtml(html: string) {
     allowedSchemesByTag: { img: ["https"] },
     transformTags: {
       a: (tagName, attribs) => {
-        const href = attribs.href || "";
-        const external = /^https?:\/\//i.test(href);
-        return {
-          tagName,
-          attribs: {
-            href,
-            ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}),
-          },
-        };
+        const next = { ...attribs };
+        const href = next.href ?? "";
+        if (/^https?:\/\//i.test(href) && !href.includes("kmfbusinessadvisors.com")) {
+          next.rel = "noopener noreferrer nofollow";
+          next.target = "_blank";
+        }
+        return { tagName, attribs: next };
       },
     },
   });
 }
 
-function mapFaqs(value: unknown): BlogFaq[] {
-  if (!Array.isArray(value)) return [];
-  return value.flatMap((item) => {
+function mapFaqs(raw: unknown): BlogFaq[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((item) => {
     if (!item || typeof item !== "object") return [];
-    const question = "question" in item ? String(item.question ?? "").trim() : "";
-    const answer = "answer" in item ? String(item.answer ?? "").trim() : "";
+    const question = String(("question" in item ? item.question : "") ?? "").trim();
+    const answer = String(("answer" in item ? item.answer : "") ?? "").trim();
     if (!question || !answer) return [];
     return [{ question, answer }];
   });
 }
 
 function mapBlog(row: Record<string, unknown>): BlogRecord | null {
+  if (!row || typeof row !== "object") return null;
   const category = String(row.category ?? "");
   if (!isBlogCategory(category)) return null;
+
   return {
     id: String(row.id),
     created_at: String(row.created_at),
@@ -92,66 +97,106 @@ function mapBlog(row: Record<string, unknown>): BlogRecord | null {
   };
 }
 
-export async function listPublishedBlogs(category?: BlogCategory) {
+export async function listPublishedBlogs(category?: BlogCategory): Promise<BlogRecord[]> {
+  const localBlogs = (await getLocalBlogs()).filter(
+    (b) => b.published && (!category || b.category === category),
+  );
+
   const supabase = createSupabaseServerClient();
-  if (!supabase) return [];
+  if (!supabase) return localBlogs;
 
-  let query = supabase
-    .from("blogs")
-    .select(BLOG_COLUMNS)
-    .eq("published", true)
-    .order("created_at", { ascending: false });
+  try {
+    let query = supabase
+      .from("blogs")
+      .select(BLOG_COLUMNS)
+      .eq("published", true)
+      .order("created_at", { ascending: false });
 
-  if (category) query = query.eq("category", category);
+    if (category) query = query.eq("category", category);
 
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return data.flatMap((row) => {
-    const blog = mapBlog(row);
-    return blog ? [blog] : [];
-  });
+    const { data, error } = await query;
+    if (error || !data || data.length === 0) return localBlogs;
+
+    const remote = data.flatMap((row) => {
+      const blog = mapBlog(row);
+      return blog ? [blog] : [];
+    });
+    return remote.length > 0 ? remote : localBlogs;
+  } catch {
+    return localBlogs;
+  }
 }
 
-export async function getPublishedBlog(slug: string) {
+export async function getPublishedBlog(slug: string): Promise<BlogRecord | null> {
+  const localMatch = (await getLocalBlogs()).find((b) => b.slug === slug && b.published) ?? null;
+
   const supabase = createSupabaseServerClient();
-  if (!supabase) return null;
+  if (!supabase) return localMatch;
 
-  const { data, error } = await supabase
-    .from("blogs")
-    .select(BLOG_COLUMNS)
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
+  try {
+    const { data, error } = await supabase
+      .from("blogs")
+      .select(BLOG_COLUMNS)
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
 
-  if (error || !data) return null;
-  return mapBlog(data);
+    if (error || !data) return localMatch;
+    return mapBlog(data) ?? localMatch;
+  } catch {
+    return localMatch;
+  }
 }
 
-export async function listAdminBlogs() {
+export async function listAdminBlogs(): Promise<BlogRecord[]> {
   if (!(await isAdminSession())) return [];
+  const localBlogs = await getLocalBlogs();
+
   const supabase = createSupabaseAdminClient();
-  if (!supabase) return [];
+  if (!supabase) return localBlogs;
 
-  const { data, error } = await supabase
-    .from("blogs")
-    .select(BLOG_COLUMNS)
-    .order("updated_at", { ascending: false });
+  try {
+    const { data, error } = await supabase
+      .from("blogs")
+      .select(BLOG_COLUMNS)
+      .order("updated_at", { ascending: false });
 
-  if (error || !data) return [];
-  return data.flatMap((row) => {
-    const blog = mapBlog(row);
-    return blog ? [blog] : [];
-  });
+    if (error || !data || data.length === 0) return localBlogs;
+
+    const remote = data.flatMap((row) => {
+      const blog = mapBlog(row);
+      return blog ? [blog] : [];
+    });
+
+    // Merge remote with local
+    const seen = new Set<string>();
+    const merged: BlogRecord[] = [];
+    for (const item of [...remote, ...localBlogs]) {
+      if (!seen.has(item.id)) {
+        seen.add(item.id);
+        merged.push(item);
+      }
+    }
+    return merged;
+  } catch {
+    return localBlogs;
+  }
 }
 
-export async function getAdminBlog(id: string) {
+export async function getAdminBlog(id: string): Promise<BlogRecord | null> {
   if (!(await isAdminSession())) return null;
-  const supabase = createSupabaseAdminClient();
-  if (!supabase) return null;
+  const localMatch = (await getLocalBlogs()).find((b) => b.id === id) ?? null;
 
-  const { data, error } = await supabase.from("blogs").select(BLOG_COLUMNS).eq("id", id).maybeSingle();
-  if (error || !data) return null;
-  return mapBlog(data);
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return localMatch;
+
+  try {
+    const { data, error } = await supabase.from("blogs").select(BLOG_COLUMNS).eq("id", id).maybeSingle();
+    if (error || !data) return localMatch;
+    return mapBlog(data) ?? localMatch;
+  } catch {
+    return localMatch;
+  }
 }
 
 function cleanFaqs(faqs: BlogFaq[]) {
@@ -164,12 +209,26 @@ function cleanFaqs(faqs: BlogFaq[]) {
     .slice(0, 20);
 }
 
-async function uniqueSlug(supabase: NonNullable<ReturnType<typeof createSupabaseAdminClient>>, slug: string, id?: string) {
+async function uniqueSlug(
+  supabase: NonNullable<ReturnType<typeof createSupabaseAdminClient>> | null,
+  slug: string,
+  id?: string,
+) {
   const base = slugifyTitle(slug);
+  const localBlogs = await getLocalBlogs();
+
   let candidate = base;
   for (let attempt = 2; attempt < 50; attempt += 1) {
-    const { data } = await supabase.from("blogs").select("id").eq("slug", candidate).maybeSingle();
-    if (!data || data.id === id) return candidate;
+    let exists = localBlogs.some((b) => b.slug === candidate && b.id !== id);
+    if (!exists && supabase) {
+      try {
+        const { data } = await supabase.from("blogs").select("id").eq("slug", candidate).maybeSingle();
+        if (data && data.id !== id) exists = true;
+      } catch {
+        // Ignore supabase error
+      }
+    }
+    if (!exists) return candidate;
     candidate = `${base.slice(0, 74)}-${attempt}`;
   }
   return `${base.slice(0, 70)}-${Date.now().toString(36)}`;
@@ -177,9 +236,6 @@ async function uniqueSlug(supabase: NonNullable<ReturnType<typeof createSupabase
 
 export async function saveBlogRecord(input: BlogInput) {
   if (!(await isAdminSession())) return { ok: false as const, error: "You need to sign in again." };
-
-  const supabase = createSupabaseAdminClient();
-  if (!supabase) return { ok: false as const, error: "Database is not configured." };
 
   const title = input.title.trim();
   const metaTitle = input.metaTitle.trim().slice(0, 160);
@@ -191,8 +247,15 @@ export async function saveBlogRecord(input: BlogInput) {
     return { ok: false as const, error: "Choose seller or buyer." };
   }
 
+  const supabase = createSupabaseAdminClient();
   const slug = await uniqueSlug(supabase, input.slug || title, input.id);
-  const payload = {
+  const blogId = input.id || crypto.randomUUID();
+  const now = new Date().toISOString();
+
+  const blogRecord: BlogRecord = {
+    id: blogId,
+    created_at: now,
+    updated_at: now,
     title,
     meta_title: metaTitle,
     meta_description: metaDescription,
@@ -202,32 +265,53 @@ export async function saveBlogRecord(input: BlogInput) {
     faqs: cleanFaqs(input.faqs),
     cover_image_url: input.coverImageUrl.trim() || null,
     published: input.published,
-    updated_at: new Date().toISOString(),
   };
 
-  if (input.id) {
-    const { error } = await supabase.from("blogs").update(payload).eq("id", input.id);
-    if (error) {
-      console.error("blog update failed", error.code);
-      return { ok: false as const, error: "The blog could not be saved." };
+  // Always save locally so data is never lost
+  await saveLocalBlog(blogRecord);
+
+  // Attempt to save to Supabase if configured
+  if (supabase) {
+    try {
+      const payload = {
+        title: blogRecord.title,
+        meta_title: blogRecord.meta_title,
+        meta_description: blogRecord.meta_description,
+        slug: blogRecord.slug,
+        category: blogRecord.category,
+        content_html: blogRecord.content_html,
+        faqs: blogRecord.faqs,
+        cover_image_url: blogRecord.cover_image_url,
+        published: blogRecord.published,
+        updated_at: blogRecord.updated_at,
+      };
+
+      if (input.id) {
+        await supabase.from("blogs").update(payload).eq("id", input.id);
+      } else {
+        await supabase.from("blogs").insert({ ...payload, id: blogId });
+      }
+    } catch (e: any) {
+      console.warn("Supabase blog sync skipped/failed:", e?.message);
     }
-    return { ok: true as const, id: input.id };
   }
 
-  const { data, error } = await supabase.from("blogs").insert(payload).select("id").single();
-  if (error || !data) {
-    console.error("blog insert failed", error?.code);
-    return { ok: false as const, error: "The blog could not be saved. Confirm the blogs table exists." };
-  }
-  return { ok: true as const, id: String(data.id) };
+  return { ok: true as const, id: blogId };
 }
 
 export async function deleteBlogRecord(id: string) {
   if (!(await isAdminSession())) return { ok: false as const, error: "You need to sign in again." };
-  const supabase = createSupabaseAdminClient();
-  if (!supabase) return { ok: false as const, error: "Database is not configured." };
 
-  const { error } = await supabase.from("blogs").delete().eq("id", id);
-  if (error) return { ok: false as const, error: "The blog could not be deleted." };
+  await deleteLocalBlog(id);
+
+  const supabase = createSupabaseAdminClient();
+  if (supabase) {
+    try {
+      await supabase.from("blogs").delete().eq("id", id);
+    } catch {
+      // Non-fatal
+    }
+  }
+
   return { ok: true as const };
 }

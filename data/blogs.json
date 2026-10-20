@@ -1,0 +1,44 @@
+[
+  {
+    "id": "seed-blog-1",
+    "created_at": "2026-10-17T12:00:00.000Z",
+    "updated_at": "2026-10-17T12:00:00.000Z",
+    "slug": "how-to-value-a-florida-business",
+    "title": "How to Value a Florida Business for Confidential Sale",
+    "meta_title": "How to Value a Florida Business for Sale | KMF Business Advisors",
+    "meta_description": "Understand SDE, EBITDA, and market multipliers to calculate the fair market valuation of your Florida business before listing.",
+    "category": "seller",
+    "content_html": "<p>Valuing a small-to-medium-sized business in Florida requires analyzing Seller's Discretionary Earnings (SDE), add-backs, and industry-specific market multipliers.</p><h2>Understanding SDE vs EBITDA</h2><p>For owner-operated businesses generating under $5M in revenue, SDE is the gold standard benchmark. SDE includes net profit plus the owner's salary, perks, interest, and non-recurring expenses.</p><h2>The Multiplier Effect</h2><p>In Florida, main street businesses typically trade at 2.0x to 3.5x SDE, while larger businesses and recurring revenue models command higher multiples.</p>",
+    "faqs": [
+      {
+        "question": "How long does a business valuation take?",
+        "answer": "A professional valuation typically takes 3 to 7 business days once financial statements (P&L and tax returns) are provided."
+      },
+      {
+        "question": "Is the valuation strictly confidential?",
+        "answer": "Yes, all consultations and valuations at KMF Business Advisors are protected under strict confidentiality agreements."
+      }
+    ],
+    "cover_image_url": null,
+    "published": true
+  },
+  {
+    "id": "seed-blog-2",
+    "created_at": "2026-10-18T12:00:00.000Z",
+    "updated_at": "2026-10-18T12:00:00.000Z",
+    "slug": "guide-to-buying-a-business-in-florida",
+    "title": "The Ultimate Guide to Buying an Established Business in Florida",
+    "meta_title": "Guide to Buying a Business in Florida | KMF Business Advisors",
+    "meta_description": "Everything buyers need to know about due diligence, SBA financing, and closing a profitable Florida business acquisition.",
+    "category": "buyer",
+    "content_html": "<p>Florida continues to be one of the top destinations for entrepreneurs acquiring profitable, established businesses. From favorable tax policies to population growth, the market offers exceptional opportunities.</p><h2>Step 1: Financial Readiness & SBA Pre-Qualification</h2><p>Before beginning your search, ensure you have verifiable liquid capital and understand SBA 7(a) loan requirements, which typically require a 10% to 20% down payment.</p><h2>Step 2: Due Diligence</h2><p>Reviewing historical financial records, lease agreements, customer concentration, and employee contracts is vital before final purchase commitment.</p>",
+    "faqs": [
+      {
+        "question": "What is the typical down payment for buying a business?",
+        "answer": "With SBA financing, down payments are usually 10% to 20%. Cash purchases or seller financing structures vary based on agreement."
+      }
+    ],
+    "cover_image_url": null,
+    "published": true
+  }
+]

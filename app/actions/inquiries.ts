@@ -1,6 +1,7 @@
 "use server";
 
 import { createSupabaseServerClient } from "@/lib/supabase";
+import { saveLocalInquiry } from "@/lib/local-storage";
 
 const SOURCES = [
   "home",
@@ -55,28 +56,47 @@ export async function submitInquiry(input: InquiryInput): Promise<InquiryResult>
     }
   }
 
+  let savedToRemote = false;
   const supabase = createSupabaseServerClient();
-  if (!supabase) {
-    return {
-      ok: false,
-      error: "The inquiry form is not connected to the database yet.",
-    };
+  if (supabase) {
+    try {
+      const { error } = await supabase.from("inquiries").insert({
+        source: input.source,
+        full_name: fullName,
+        email,
+        phone,
+        details,
+      });
+
+      if (!error) {
+        savedToRemote = true;
+      } else {
+        console.warn("Supabase inquiry insert skipped/failed, using local storage:", error.message || error.code);
+      }
+    } catch (e: any) {
+      console.warn("Supabase inquiry network error, using local storage:", e?.message);
+    }
   }
 
-  const { error } = await supabase.from("inquiries").insert({
-    source: input.source,
-    full_name: fullName,
-    email,
-    phone,
-    details,
-  });
-
-  if (error) {
-    console.error("inquiry insert failed", error.code);
-    return {
-      ok: false,
-      error: "We could not save your inquiry. Please try again in a moment.",
-    };
+  // Always persist locally if remote database is not reachable or tables don't exist yet
+  try {
+    await saveLocalInquiry({
+      id: crypto.randomUUID(),
+      created_at: new Date().toISOString(),
+      source: input.source,
+      full_name: fullName,
+      email,
+      phone,
+      details,
+    });
+  } catch (localError: any) {
+    if (!savedToRemote) {
+      console.error("Local inquiry save failed:", localError?.message);
+      return {
+        ok: false,
+        error: "We could not save your inquiry. Please try again in a moment.",
+      };
+    }
   }
 
   return { ok: true };

@@ -57,6 +57,28 @@ const SEED_BLOGS: BlogRecord[] = [
     cover_image_url: null,
     published: true,
   },
+  {
+    id: "seed-blog-3",
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 86400000).toISOString(),
+    slug: "companies-for-sale-in-usa",
+    title: "Companies for Sale in USA: Finding and Acquiring Profitable Businesses",
+    meta_title: "Companies for Sale in USA | Florida & National Business Opportunities",
+    meta_description:
+      "Explore strategies for finding, evaluating, and purchasing profitable companies for sale in Florida and across the USA with KMF Business Advisors.",
+    category: "seller",
+    content_html:
+      "<p>Navigating companies for sale in the USA requires a clear acquisition strategy, thorough financial analysis, and seasoned brokerage representation.</p><h2>Evaluating Business Listings</h2><p>When searching for companies for sale across Florida and the greater US, focus on historical cash flow, recurring revenue, trained staff, and growth potential.</p><h2>Confidential Acquisition Process</h2><p>Working with professional business advisors ensures you review vetted financial statements and protect trade secrets throughout due diligence and closing.</p>",
+    faqs: [
+      {
+        question: "How do I find confidential companies for sale in the USA?",
+        answer:
+          "Working with a licensed business broker like KMF Business Advisors gives you access to off-market and pre-vetted business listings that are never advertised publicly.",
+      },
+    ],
+    cover_image_url: null,
+    published: true,
+  },
 ];
 
 async function ensureDirectory(): Promise<void> {
@@ -101,7 +123,6 @@ export async function getLocalBlogs(): Promise<BlogRecord[]> {
   } catch {
     // Fall back to seed blogs
   }
-  // Initialize with seed blogs if file doesn't exist
   try {
     await fs.writeFile(BLOGS_FILE, JSON.stringify(SEED_BLOGS, null, 2), "utf-8");
   } catch {

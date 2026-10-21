@@ -49,8 +49,8 @@ export function sanitizeBlogHtml(html: string) {
       th: ["colspan", "rowspan"],
       "*": ["class"],
     },
-    allowedSchemes: ["http", "https", "mailto"],
-    allowedSchemesByTag: { img: ["https"] },
+    allowedSchemes: ["http", "https", "mailto", "data"],
+    allowedSchemesByTag: { img: ["https", "http", "data"] },
     transformTags: {
       a: (tagName, attribs) => {
         const next = { ...attribs };

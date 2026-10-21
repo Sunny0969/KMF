@@ -281,12 +281,25 @@ export default function BlogEditor({ blog = emptyBlog }: { blog?: BlogRecord }) 
           <button
             type="button"
             onClick={() => coverRef.current?.click()}
-            className="w-full py-2 rounded-lg border border-slate-300 text-sm font-semibold"
+            className="w-full py-2 rounded-lg border border-slate-300 text-sm font-semibold hover:border-[#c59b27] transition-colors"
           >
-            {uploading ? "Uploading..." : cover ? "Replace cover" : "Upload cover"}
+            {uploading ? "Uploading..." : cover ? "Replace cover image" : "Upload cover image"}
           </button>
+          <div className="pt-1">
+            <label className="block text-xs font-semibold text-slate-500 mb-1">Or paste image URL:</label>
+            <input
+              type="text"
+              value={cover.startsWith("data:") ? "" : cover}
+              onChange={(e) => {
+                setUploadError("");
+                setCover(e.target.value.trim());
+              }}
+              placeholder="https://example.com/image.jpg"
+              className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#c59b27]"
+            />
+          </div>
           {cover ? (
-            <button type="button" onClick={() => setCover("")} className="text-xs font-semibold text-red-600">
+            <button type="button" onClick={() => setCover("")} className="text-xs font-semibold text-red-600 hover:underline">
               Remove cover
             </button>
           ) : null}

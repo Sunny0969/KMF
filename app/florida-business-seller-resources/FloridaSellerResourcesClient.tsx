@@ -2,8 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import type { BlogRecord } from '@/lib/blog';
+import ResourceBlogsSection from '@/components/blog/ResourceBlogsSection';
 
-export default function FloridaSellerResourcesClient() {
+export default function FloridaSellerResourcesClient({
+  blogs = [],
+}: {
+  blogs?: BlogRecord[];
+}) {
   const [openFaq, setOpenFaq] = useState<number | null>(0); // First item active by default
 
   const toggleFaq = (index: number) => {
@@ -152,6 +158,9 @@ export default function FloridaSellerResourcesClient() {
           </div>
         </div>
       </section>
+
+      {/* 2.5. SELLER ARTICLES & GUIDES */}
+      <ResourceBlogsSection blogs={blogs} category="seller" />
 
       {/* 3. FREQUENTLY ASKED QUESTIONS */}
       <section className="py-20 bg-white border-b border-slate-200">

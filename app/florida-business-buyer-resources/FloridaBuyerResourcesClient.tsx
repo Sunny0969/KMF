@@ -3,8 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { submitInquiry } from '@/app/actions/inquiries';
+import type { BlogRecord } from '@/lib/blog';
+import ResourceBlogsSection from '@/components/blog/ResourceBlogsSection';
 
-export default function FloridaBuyerResourcesClient() {
+export default function FloridaBuyerResourcesClient({
+  blogs = [],
+}: {
+  blogs?: BlogRecord[];
+}) {
   const [openFaq, setOpenFaq] = useState<number | null>(0); // First FAQ open by default
   const [formData, setFormData] = useState({
     refNumber: '',
@@ -498,6 +504,9 @@ export default function FloridaBuyerResourcesClient() {
           </div>
         </div>
       </section>
+
+      {/* 3.5. BUYER ARTICLES & GUIDES */}
+      <ResourceBlogsSection blogs={blogs} category="buyer" />
 
       {/* 4. FREQUENTLY ASKED QUESTIONS */}
       <section className="py-20 bg-white border-b border-slate-200">

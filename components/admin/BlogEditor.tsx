@@ -139,6 +139,7 @@ export default function BlogEditor({ blog = emptyBlog }: { blog?: BlogRecord }) 
                 }}
                 className="field"
               />
+              <p className="text-xs text-slate-500 mt-1">Live URL: <span className="font-mono text-slate-700">/{category === "seller" ? "florida-business-seller-resources" : "florida-business-buyer-resources"}/{slug || "..."}</span></p>
             </Field>
           </div>
           <Field label="Meta description" hint="Shown under the title in search results. Aim for about 160 characters.">
@@ -249,6 +250,7 @@ export default function BlogEditor({ blog = emptyBlog }: { blog?: BlogRecord }) 
           <Link href="/admin/blogs" className="block text-center text-sm font-semibold text-slate-500">
             Back to blogs
           </Link>
+          {blog.id && blog.published && blog.slug ? (<a href={`/${category === "seller" ? "florida-business-seller-resources" : "florida-business-buyer-resources"}/${blog.slug}`} target="_blank" rel="noopener noreferrer" className="block text-center text-xs font-bold text-[#c59b27] hover:underline">View live article ?</a>) : null}
           {blog.id ? (
             <button
               type="submit"

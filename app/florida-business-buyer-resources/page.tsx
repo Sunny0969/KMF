@@ -1,5 +1,8 @@
 import { Metadata } from "next";
 import FloridaBuyerResourcesClient from "./FloridaBuyerResourcesClient";
+import { listPublishedBlogs } from "@/lib/blogs";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Florida Business Buyer Resources | KMF",
@@ -36,6 +39,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FloridaBuyerResourcesPage() {
-  return <FloridaBuyerResourcesClient />;
+export default async function FloridaBuyerResourcesPage() {
+  const blogs = await listPublishedBlogs("buyer");
+  return <FloridaBuyerResourcesClient blogs={blogs} />;
 }

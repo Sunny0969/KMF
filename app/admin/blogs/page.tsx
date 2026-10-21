@@ -42,23 +42,45 @@ export default async function AdminBlogsPage() {
         </div>
       ) : (
         <ul className="bg-white border border-slate-200 rounded-2xl divide-y divide-slate-100">
-          {blogs.map((blog) => (
-            <li key={blog.id}>
-              <Link href={`/admin/blogs/${blog.id}`} className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4 hover:bg-slate-50">
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold text-[#0b1c2d] truncate">{blog.title}</p>
-                  <p className="text-sm text-slate-500 truncate">/blog/{blog.slug}</p>
-                </div>
-                <span className="text-[11px] font-bold uppercase tracking-wide text-[#8a6d12] bg-amber-100 px-2 py-1 rounded w-fit">
-                  {CATEGORY_LABELS[blog.category]}
-                </span>
-                <span className={`text-xs font-bold uppercase ${blog.published ? "text-emerald-700" : "text-slate-400"}`}>
-                  {blog.published ? "Published" : "Draft"}
-                </span>
-                <span className="text-xs text-slate-400">{dateFormat.format(new Date(blog.updated_at))}</span>
-              </Link>
-            </li>
-          ))}
+          {blogs.map((blog) => {
+            const resourcePath =
+              blog.category === "seller"
+                ? "/florida-business-seller-resources"
+                : "/florida-business-buyer-resources";
+            const liveUrl = `${resourcePath}/${blog.slug}`;
+
+            return (
+              <li key={blog.id} className="flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <Link href={`/admin/blogs/${blog.id}`} className="flex-1 flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-[#0b1c2d] truncate">{blog.title}</p>
+                    <p className="text-sm text-slate-500 truncate">{liveUrl}</p>
+                  </div>
+                  <span className="text-[11px] font-bold uppercase tracking-wide text-[#8a6d12] bg-amber-100 px-2.5 py-1 rounded w-fit">
+                    {CATEGORY_LABELS[blog.category]}
+                  </span>
+                  <span className={`text-xs font-bold uppercase ${blog.published ? "text-emerald-700" : "text-slate-400"}`}>
+                    {blog.published ? "Published" : "Draft"}
+                  </span>
+                  <span className="text-xs text-slate-400 shrink-0">{dateFormat.format(new Date(blog.updated_at))}</span>
+                </Link>
+                {blog.published ? (
+                  <div className="pr-5 shrink-0">
+                    <a
+                      href={liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 text-xs font-bold text-[#c59b27] hover:bg-amber-50 rounded-lg border border-amber-200 transition-colors inline-flex items-center gap-1"
+                      title="View live article on website"
+                    >
+                      <span>View</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       )}
     </AdminShell>
